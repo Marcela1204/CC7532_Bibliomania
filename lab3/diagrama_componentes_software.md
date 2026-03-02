@@ -1,103 +1,98 @@
 # Detalhe dos Fluxos do Sistema
----
-UC01 - Empréstimo de material
 
-atores: bibliotecário
+### UC01 - Empréstimo de material
 
-fluxo principal: 
+#### Atores:
+1. Bibliotecário
 
-1. bibliotecário informa o ID do exemplar
-2. bibliotecário informa o ID do leitor
-3. Sistema valida se leitor está apto para emprestar material
-4. Sistema associa material emprestado ao leitor e define data de devolução
-5. Sistema confirma o empréstimo e retira uma unidade dos exemplares disponíveis
+#### Fluxo principal: 
+1. Bibliotecário informa o ID do exemplar;
+2. Bibliotecário informa o ID do leitor;
+3. Sistema valida se leitor está apto para emprestar material;
+4. Sistema associa material emprestado ao leitor e define data de devolução;
+5. Sistema confirma o empréstimo e retira uma unidade dos exemplares disponíveis.
 
----
+### UC02 - Cadastro de usuário
 
-UC02 - Cadastro de usuário
+#### Atores:
+1. Bibliotecário
 
-atores: bibliotecário
+#### Fluxo principal: 
+1. Bibliotecário informa os dados pessoais do leitor (nome, cpf, email, telefone);
+2. Sistema verifica se já existe leitor cadastrado com o cpf informado;
+3. Bibliotecário solicita que leitor cadastre uma senha;
+4. Sistema verifica se senha está no formato válido;
+5. Bibliotecário confirma o cadastro;
+6. Sistema registra os dados do leitor.
 
-fluxo principal:
+### UC03 - Cadastro de material
 
-1. bibliotecário informa os dados pessoais do leitor (nome, cpf, email, telefone)
-2. Sistema verifica se já existe leitor cadastrado com o cpf informado
-3. Bibliotecário solicita que leitor cadastre uma senha
-4. Sistema verifica se senha está no formato válido
-5. Bibliotecário confirma o cadastro
-6. Sistema registra os dados do leitor
+#### Atores:
+1. Bibliotecário
 
----
+#### Fluxo principal:
+1. Bibliotecário informa o ISBN do material;
+2. Sistema valida se é ISBN válido;
+3. Sistema registra informações referentes ao ISBN (classificação, tipo, idioma, ano de publicação, autores, editora);
+4. Bibliotecário confirma o cadastro;
+5. Sistema registra o cadastro e adiciona uma unidade do material no acervo.
 
-UC03 - Cadastro de material
+### UC04 - Devolução de material
 
-atores: bibliotecário
+#### Atores:
+1. Bibliotecário
 
-fluxo principal:
-
-1. Bibliotecário informa o ISBN do material
-2. Sistema valida se é ISBN válido
-3. Sistema registra informações referentes ao ISBN (classificação, tipo, idioma, ano de publicação, autores, editora)
-4. Bibliotecário confirma o cadastro
-5. Sistema registra o cadastro e adiciona uma unidade do material no acervo
-
----
-
-UC04 - Devolução de material
-
-atores: bibliotecário
-
-fluxo principal:
-
+#### Fluxo principal: 
 1. Bibliotecário informa o ID do exemplar devolvido
 2. Sistema verifica se devolução está dentro do prazo estabelecido no ato do empréstimo
 3. Sistema registra devolução e acrescenta uma unidade dos exemplares disponíveis
 
----
+### UC05 - Renovação de material
 
-UC05 - Renovação de material
+#### Atores:
+1. Leitor
 
-atores: leitor
-
-fluxo principal:
-
+#### Fluxo principal: 
 1. Leitor seleciona o material que gostaria de renovar
 2. Sistema verifica se renovação está dentro do prazo estabelecido no ato do empréstimo
 3. Sistema confirma a renovação e define nova data de devolução
 
 --- 
+
 # Interfaces do Sistema
 
-\<\<interface\>\> LivroService<br>
-\+ cadastrarLivro(dadosLivro)<br>
-\+ editarLivro(idLivro, dadosLivro)<br>
-\+ listarLivros()<br>
-\+ pesquisarLivros(filtro)<br>
-\+ visualizarDetalhesLivro(idLivro)<br>
+```mermaid
+classDiagram
+    class LivroService {
+        + cadastrarLivro(dadosLivro)
+        + editarLivro(idLivro, dadosLivro)
+        + listarLivros()
+        + pesquisarLivros(filtro)
+        + visualizarDetalhesLivro(idLivro)
+    }
 
-<br>
+    class UsuarioService {
+        + cadastrarUsuario(dadosUsuario)
+        + atualizarUsuario(idUsuario, dadosUsuario)
+        + listarUsuarios()
+    }
 
-\<\<interface\>\> UsuarioService<br>
-\+ cadastrarUsuario(dadosUsuario)<br>
-\+ atualizarUsuario(idUsuario, dadosUsuario)<br>
-\+ listarUsuarios()<br>
+    class EmprestimoService {
+        + registrarEmprestimo(idUsuario, idLivro)
+        + registrarDevolucao(idEmprestimo)
+        + renovarEmprestimo(idEmprestimo)
+        + visualizarEmprestimosAtivos(idUsuario)
+        + validaLeitor(idUsuario)
+    }
 
-<br>
+    class HistoricoService {
+        + acessarHistoricoEmprestimos(idUsuario)
+        + acessarHistoricoUsuario(idUsuario)
+    }
 
-\<\<interface\>\> EmprestimoService <br>
-\+ registrarEmprestimo(idUsuario, idLivro)<br>
-\+ registrarDevolucao(idEmprestimo)<br>
-\+ renovarEmprestimo(idEmprestimo)<br>
-\+ visualizarEmprestimosAtivos(idUsuario)<br>
-\+ validaLeitor(idUsuario)<br>
+    class RelatoriaService {
+        + gerarRelatorioEmprestimos(periodo)
+    }
+```
 
-<br>
 
-\<\<interface\>\>  HistoricoService<br>
-\+ acessarHistoricoEmprestimos(idUsuario)<br>
-\+ acessarHistoricoUsuario(idUsuario)<br>
-
-<br>
-
-\<\<interface\>\>  RelatorioService<br>
-\+ gerarRelatorioEmprestimos(periodo)<br>
