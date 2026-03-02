@@ -1,4 +1,5 @@
-# Detalhe dos Fluxos do Sistema
+# Detalhe dos Fluxos do Sistema 
+[Casos de Uso](https://github.com/Marcela1204/CC7532_Bibliomania/blob/main/lab3/casosDeUso.png)
 
 ### UC01 - Empréstimo de material
 
@@ -89,6 +90,8 @@ classDiagram
     }
 ```
 
+---
+
 # Operações em Interfaces Coesas
 
 ```mermaid
@@ -124,5 +127,7 @@ classDiagram
         + gerarRelatorioEmprestimos(periodo)
     }
 ```
+---
 
-
+# Componentes (Diagrama + Detalhamento)
+https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing
