@@ -63,21 +63,18 @@
 
 ```mermaid
 classDiagram
-    class LivroService {
+    class OperacoesManutencao {
         + cadastrarLivro(dadosLivro)
         + editarLivro(idLivro, dadosLivro)
         + listarLivros()
         + pesquisarLivros(filtro)
         + visualizarDetalhesLivro(idLivro)
-    }
-
-    class UsuarioService {
         + cadastrarUsuario(dadosUsuario)
         + atualizarUsuario(idUsuario, dadosUsuario)
         + listarUsuarios()
     }
 
-    class EmprestimoService {
+    class OperacoesPadrao {
         + registrarEmprestimo(idUsuario, idLivro)
         + registrarDevolucao(idEmprestimo)
         + renovarEmprestimo(idEmprestimo)
@@ -85,12 +82,45 @@ classDiagram
         + validaLeitor(idUsuario)
     }
 
-    class HistoricoService {
+    class OperacoesRegistro {
+        + acessarHistoricoEmprestimos(idUsuario)
+        + acessarHistoricoUsuario(idUsuario)
+        + gerarRelatorioEmprestimos(periodo)
+    }
+```
+
+# Operações em Interfaces Coesas
+
+```mermaid
+classDiagram
+    class ServicoLivro {
+        + cadastrarLivro(dadosLivro)
+        + editarLivro(idLivro, dadosLivro)
+        + listarLivros()
+        + pesquisarLivros(filtro)
+        + visualizarDetalhesLivro(idLivro)
+    }
+
+    class ServicoUsuario {
+        + cadastrarUsuario(dadosUsuario)
+        + atualizarUsuario(idUsuario, dadosUsuario)
+        + listarUsuarios()
+    }
+
+    class ServicoEmprestimo {
+        + registrarEmprestimo(idUsuario, idLivro)
+        + registrarDevolucao(idEmprestimo)
+        + renovarEmprestimo(idEmprestimo)
+        + visualizarEmprestimosAtivos(idUsuario)
+        + validaLeitor(idUsuario)
+    }
+
+    class ServicoHistorico {
         + acessarHistoricoEmprestimos(idUsuario)
         + acessarHistoricoUsuario(idUsuario)
     }
 
-    class RelatoriaService {
+    class ServicoRelatoria {
         + gerarRelatorioEmprestimos(periodo)
     }
 ```
