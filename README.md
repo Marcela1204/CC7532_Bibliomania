@@ -70,10 +70,12 @@ Gestão ineficiente do empréstimo de livros em bibliotecas, especialmente em am
 
 ## 🗂️ Links úteis
 
-- GitHub:  
-  👉 https://github.com/Marcela1204/CC7532_Biblioteca_Digital  
-- Trello:
-  https://trello.com/b/7cYUsruL/bibliomania
+- GitHub Engenharia de Software:  
+  👉 https://github.com/Marcela1204/CC7532_Biblioteca_Digital
+- Github Gestão de Software: <br>
+  👉 https://github.com/Adelgrin/Gestao_projetos
+- Trello: <br>
+  👉 https://trello.com/b/7cYUsruL/bibliomania
 
 ---
 
