@@ -104,6 +104,7 @@ classDiagram
         + cadastrarUsuario(dadosUsuario)
         + atualizarUsuario(idUsuario, dadosUsuario)
         + listarUsuarios()
+        + acessarHistoricoUsuario(idUsuario)
     }
 
     class ServicoEmprestimo {
