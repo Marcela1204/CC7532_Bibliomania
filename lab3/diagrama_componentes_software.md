@@ -120,4 +120,6 @@ classDiagram
 ---
 
 # Componentes (Diagrama + Detalhamento)
-[Diagrama](https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing)
+[Diagrama](https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing) <br>
+<img width="641" height="504" alt="image" src="https://github.com/user-attachments/assets/40cb0fef-71ab-45d9-b7cd-8693ab855f78" />
+
