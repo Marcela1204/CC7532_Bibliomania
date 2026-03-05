@@ -64,29 +64,23 @@
 
 ```mermaid
 classDiagram
-    class OperacoesManutencao {
-        + cadastrarLivro(dadosLivro)
-        + editarLivro(idLivro, dadosLivro)
+    class Operacoes{
+        + cadastrarLivro(ISBN)
+        + editarLivro(idLivro, ISBN)
         + listarLivros()
         + pesquisarLivros(filtro)
         + visualizarDetalhesLivro(idLivro)
+        + atualizarEstoque(ISBN, idLivro)
+        + validarLivro(ISBN)
         + cadastrarUsuario(dadosUsuario)
         + atualizarUsuario(idUsuario, dadosUsuario)
         + listarUsuarios()
-    }
-
-    class OperacoesPadrao {
         + registrarEmprestimo(idUsuario, idLivro)
         + registrarDevolucao(idEmprestimo)
         + renovarEmprestimo(idEmprestimo)
         + visualizarEmprestimosAtivos(idUsuario)
         + validaLeitor(idUsuario)
-    }
-
-    class OperacoesRegistro {
-        + acessarHistoricoEmprestimos(idUsuario)
-        + acessarHistoricoUsuario(idUsuario)
-        + gerarRelatorioEmprestimos(periodo)
+        + validarPrazo(idEmprestimo)
     }
 ```
 
@@ -97,11 +91,13 @@ classDiagram
 ```mermaid
 classDiagram
     class ServicoLivro {
-        + cadastrarLivro(dadosLivro)
-        + editarLivro(idLivro, dadosLivro)
+        + cadastrarLivro(ISBN)
+        + editarLivro(idLivro, ISBN)
         + listarLivros()
         + pesquisarLivros(filtro)
         + visualizarDetalhesLivro(idLivro)
+        + atualizarEstoque(ISBN, idLivro)
+        + validarLivro(ISBN)
     }
 
     class ServicoUsuario {
@@ -116,18 +112,11 @@ classDiagram
         + renovarEmprestimo(idEmprestimo)
         + visualizarEmprestimosAtivos(idUsuario)
         + validaLeitor(idUsuario)
+        + validarPrazo(idEmprestimo)
     }
 
-    class ServicoHistorico {
-        + acessarHistoricoEmprestimos(idUsuario)
-        + acessarHistoricoUsuario(idUsuario)
-    }
-
-    class ServicoRelatoria {
-        + gerarRelatorioEmprestimos(periodo)
-    }
 ```
 ---
 
 # Componentes (Diagrama + Detalhamento)
-https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing
+[Diagrama](https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing)
