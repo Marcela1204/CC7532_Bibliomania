@@ -108,6 +108,7 @@ classDiagram
         + cadastrarUsuario(dadosUsuario)
         + atualizarUsuario(idUsuario, dadosUsuario)
         + listarUsuarios()
+        + acessarHistoricoUsuario(idUsuario)
     }
 
     class ServicoEmprestimo {
@@ -116,16 +117,10 @@ classDiagram
         + renovarEmprestimo(idEmprestimo)
         + visualizarEmprestimosAtivos(idUsuario)
         + validaLeitor(idUsuario)
-    }
-
-    class ServicoHistorico {
         + acessarHistoricoEmprestimos(idUsuario)
-        + acessarHistoricoUsuario(idUsuario)
-    }
-
-    class ServicoRelatoria {
         + gerarRelatorioEmprestimos(periodo)
     }
+
 ```
 ---
 
