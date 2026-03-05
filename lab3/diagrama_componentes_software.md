@@ -72,14 +72,14 @@ classDiagram
         + visualizarDetalhesLivro(idLivro)
         + atualizarEstoque(ISBN, idLivro)
         + validarLivro(ISBN)
-        + cadastrarUsuario(dadosUsuario)
-        + atualizarUsuario(idUsuario, dadosUsuario)
-        + listarUsuarios()
-        + registrarEmprestimo(idUsuario, idLivro)
+        + cadastrarLeitor(dadosLeitor)
+        + atualizarLeitor(idLeitor, dadosLeitor)
+        + listarLeitors()
+        + registrarEmprestimo(idLeitor, idLivro)
         + registrarDevolucao(idEmprestimo)
         + renovarEmprestimo(idEmprestimo)
-        + visualizarEmprestimosAtivos(idUsuario)
-        + validaLeitor(idUsuario)
+        + visualizarEmprestimosAtivos(idLeitor)
+        + validaLeitor(idLeitor)
         + validarPrazo(idEmprestimo)
     }
 ```
@@ -100,19 +100,19 @@ classDiagram
         + validarLivro(ISBN)
     }
 
-    class ServicoUsuario {
-        + cadastrarUsuario(dadosUsuario)
-        + atualizarUsuario(idUsuario, dadosUsuario)
-        + listarUsuarios()
-        + acessarHistoricoUsuario(idUsuario)
+    class ServicoLeitor {
+        + cadastrarLeitor(dadosLeitor)
+        + atualizarLeitor(idLeitor, dadosLeitor)
+        + listarLeitors()
+        + acessarHistoricoLeitor(idLeitor)
     }
 
     class ServicoEmprestimo {
-        + registrarEmprestimo(idUsuario, idLivro)
+        + registrarEmprestimo(idLeitor, idLivro)
         + registrarDevolucao(idEmprestimo)
         + renovarEmprestimo(idEmprestimo)
-        + visualizarEmprestimosAtivos(idUsuario)
-        + validaLeitor(idUsuario)
+        + visualizarEmprestimosAtivos(idLeitor)
+        + validaLeitor(idLeitor)
         + validarPrazo(idEmprestimo)
     }
 
