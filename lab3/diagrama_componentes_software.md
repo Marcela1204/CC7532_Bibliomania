@@ -75,7 +75,7 @@ classDiagram
         + cadastrarUsuario(dadosUsuario)
         + atualizarUsuario(idUsuario, dadosUsuario)
         + listarUsuarios()
-        + registrarEmprestimo(idUsuario, idLivro)
+        + registrarEmprestimo(idLivro)
         + registrarDevolucao(idEmprestimo)
         + renovarEmprestimo(idEmprestimo)
         + visualizarEmprestimosAtivos(idUsuario)
@@ -108,7 +108,7 @@ classDiagram
     }
 
     class ServicoEmprestimo {
-        + registrarEmprestimo(idUsuario, idLivro)
+        + registrarEmprestimo(idLivro)
         + registrarDevolucao(idEmprestimo)
         + renovarEmprestimo(idEmprestimo)
         + visualizarEmprestimosAtivos(idUsuario)
