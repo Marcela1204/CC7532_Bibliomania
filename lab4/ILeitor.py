@@ -1,7 +1,8 @@
+import os
 from supabase import *
 
 url = ""
-key = ""
+key = os.getenv('API_KEY')
 
 supabase: Client = create_client(url,key)
 class ILeitor:
