@@ -90,7 +90,7 @@ classDiagram
 
 ```mermaid
 classDiagram
-    class ServicoLivro {
+    class ILivro {
         + cadastrarLivro(ISBN)
         + editarLivro(idLivro, ISBN)
         + listarLivros()
@@ -100,14 +100,14 @@ classDiagram
         + validarLivro(ISBN)
     }
 
-    class ServicoLeitor {
+    class ILeitor {
         + cadastrarLeitor(dadosLeitor)
         + atualizarLeitor(idLeitor, dadosLeitor)
         + listarLeitors()
         + acessarHistoricoLeitor(idLeitor)
     }
 
-    class ServicoEmprestimo {
+    class IEmprestimo {
         + registrarEmprestimo(idLeitor, idLivro)
         + registrarDevolucao(idEmprestimo)
         + renovarEmprestimo(idEmprestimo)
@@ -123,3 +123,5 @@ classDiagram
 [Condições](./condicoes.md)
 # Componentes (Diagrama + Detalhamento)
 [Diagrama](https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing)
+<img width="621" height="411" alt="image" src="https://github.com/user-attachments/assets/bf817856-a943-4c31-8c6a-891f12aa3d7b" />
+
