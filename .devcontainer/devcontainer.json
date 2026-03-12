@@ -1,0 +1,9 @@
+{
+  "name": "Bibliomania-dev",
+
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+
+  "remoteEnv": {
+    "API_KEY": "${localEnv:API_KEY}"
+  }
+}
