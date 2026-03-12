@@ -1,6 +1,8 @@
 import os
 from supabase import *
+from dotenv import load_dotenv
 
+load_dotenv()
 url = ""
 key = os.getenv('API_KEY')
 
