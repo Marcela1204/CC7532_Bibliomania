@@ -3,7 +3,13 @@
 
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
 
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
   "remoteEnv": {
     "API_KEY": "${localEnv:API_KEY}"
-  }
+  },
+
+  "postCreateCommand": "curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash"
 }
