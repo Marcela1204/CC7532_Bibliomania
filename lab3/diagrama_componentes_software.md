@@ -1,6 +1,5 @@
 # Detalhe dos Fluxos do Sistema 
 [Casos de Uso](https://drive.google.com/file/d/1n6W11CAws2J75GDszjtqVpHk1xGermfX/view?usp=sharing)
-<img width="621" height="411" alt="image" src="https://drive.google.com/file/d/1n6W11CAws2J75GDszjtqVpHk1xGermfX/view?usp=sharing" />
 
 ### UC01 - Empréstimo de material
 
@@ -124,6 +123,4 @@ classDiagram
 [Condições](./condicoes.md)
 # Componentes (Diagrama + Detalhamento)
 [Diagrama](https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing)
-<br>
-<img width="621" height="411" alt="image" src="https://drive.google.com/file/d/1qUqfrj0Vb4Z9gNrpqL-kXKBCEv7f0WxR/view?usp=sharing" />
 
