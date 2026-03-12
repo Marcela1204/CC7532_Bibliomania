@@ -92,8 +92,5 @@ src <br>
 └── Main.java
 
 ## Como executar
-1. Abra o codespace do github
-2. Entre na pasta do laboratório 4. Digite no terminal: cd .\CC7532_Bibliomania\lab4
-3. Compile o arquivo Main.java. Digite no terminal: javac Main.java
-4. Execute o arquivo Main.java. Digite no terminal: java Main
+(Vou incluir ainda)
 
