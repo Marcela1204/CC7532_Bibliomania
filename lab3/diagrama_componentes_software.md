@@ -30,11 +30,12 @@
 
 #### Atores:
 1. Bibliotecário
+2. API Google Books
 
 #### Fluxo principal:
 1. Bibliotecário informa o ISBN do material;
-2. Sistema valida se é ISBN válido;
-3. Sistema registra informações referentes ao ISBN (classificação, tipo, idioma, ano de publicação, autores, editora);
+2. Sistema faz requisão a API Google Books a partir dp ISBN;
+3. Sistema registra informações retornadas pela API referentes ao ISBN (classificação, tipo, idioma, ano de publicação, autores, editora);
 4. Bibliotecário confirma o cadastro;
 5. Sistema registra o cadastro e adiciona uma unidade do material no acervo.
 
