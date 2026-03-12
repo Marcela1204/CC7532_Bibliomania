@@ -80,15 +80,15 @@ Isso traz diversas vantagens:
 
 # Instruções para execução do projeto
 ## Estrutura dos códigos
-src
-├── emprestimo
-│ ├── IEmprestimo.java
-│ └── OperacoesEmprestimo.java
-│
-├── leitor
-│ ├── ILeitor.java
-│ └── operacoesLeitor.java
-│
+src <br>
+├── emprestimo <br>
+│ ├── IEmprestimo.java <br>
+│ └── OperacoesEmprestimo.java <br>
+│ <br>
+├── leitor <br>
+│ ├── ILeitor.java <br>
+│ └── operacoesLeitor.java <br>
+│ <br>
 └── Main.java
 
 ## Como executar
