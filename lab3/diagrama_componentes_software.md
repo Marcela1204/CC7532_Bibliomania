@@ -1,5 +1,5 @@
 # Detalhe dos Fluxos do Sistema 
-[Casos de Uso](https://github.com/Marcela1204/CC7532_Bibliomania/blob/main/lab3/casosDeUso.png)
+[Casos de Uso](https://drive.google.com/file/d/1n6W11CAws2J75GDszjtqVpHk1xGermfX/view?usp=sharing)
 
 ### UC01 - Empréstimo de material
 
