@@ -1,6 +1,6 @@
 # Condições dos componentes
 
-## Interface Emprestimo
+## Interface IEmprestimo
 ## Operação registrarEmprestimo
 ### Pré-condição:
 * O livro precisa estar disponível
@@ -10,7 +10,7 @@
 
 ---
 
-## Interface Emprestimo
+## Interface ILeitor
 ## Operação cadastrarLeitor
 ### Pré-condição
 * O leitor deve haver documento válido
@@ -20,7 +20,7 @@
 
 ---
 
-## Interface Emprestimo
+## Interface ILivro
 ## Operação cadastrarLivro
 ### Pré-condição
 * O ISBN deve ser válido
