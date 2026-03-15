@@ -56,41 +56,101 @@ Essa interface é utilizada para validar a existência de um leitor antes de reg
 Dessa forma, o componente Emprestimo depende apenas da interface e não da implementação concreta do componente Leitor.
 
 # Explicação de como ocorre a comunicação entre eles
-A comunicação entre os componentes ocorre através de interfaces.   
+## Injecao de Dependencia
 
-O componente Emprestimo recebe uma referência da interface ILeitor em seu construtor. Assim, quando precisa validar um leitor ou acessar informações relacionadas a ele, utiliza os métodos definidos nessa interface.      
+### Como foi implementada
 
-Exemplo conceitual da comunicação:
+A injecao de dependencia no projeto Bibliomania segue o padrao **Interface + Container (Singleton)**, aplicado nos componentes Leitor e Emprestimo. O objetivo e evitar acoplamento direto entre as camadas, permitindo que a logica de negocio (Service) nao dependa diretamente da implementacao concreta de acesso a dados (Repository).
 
-- Emprestimo → usa → ILeitor
+### Estrutura por componente
 
-Isso permite que o componente Emprestimo utilize funcionalidades do componente Leitor sem conhecer sua implementação interna.   
+Cada componente possui tres arquivos que formam o mecanismo de injecao de dependencia:
 
-# Justificativa de como foi evitado o acoplamento direto
-O baixo acoplamento foi obtido através da utilização de interfaces.   
+1. **`interfaces.py`** - Define as interfaces abstratas (classes ABC):
+   - `IRepository` - Contrato para a camada de acesso a dados (criar, atualizar, listar, buscar)
+   - `IService` - Contrato para a camada de logica de negocio (regras de negocio, validacoes)
 
-O componente Emprestimo não depende diretamente da classe operacoesLeitor. Em vez disso, ele depende da interface ILeitor.   
+2. **`repositories.py`** - Implementacao concreta do `IRepository`:
+   - Implementa todos os metodos abstratos usando Django ORM
+   - E a unica camada que conhece o banco de dados diretamente
 
-Isso traz diversas vantagens:
+3. **`services.py`** - Implementacao concreta do `IService`:
+   - Recebe o repositorio via **construtor** (injecao por construtor)
+   - Nunca instancia o repositorio diretamente
+   - Depende apenas da interface abstrata, nao da implementacao concreta
 
-1. Permite substituir a implementação do componente Leitor sem alterar o componente Emprestimo
-2. Facilita manutenção e evolução do sistema
-3. Melhora a modularidade da aplicação
-4. Segue o princípio de programar para interfaces, não para implementações
+4. **`container.py`** - Container de injecao de dependencia:
+   - Implementa o padrao **Singleton** com `@classmethod`
+   - Responsavel por instanciar e conectar as dependencias
+   - Fornece metodos `get_repository()` e `get_service()`
+   - Possui metodo `reset()` para facilitar testes
+
+### Fluxo de funcionamento
+
+```
+Views/API  -->  Container.get_service()  -->  Service(repository)  -->  Repository  -->  Django ORM  -->  Banco de Dados
+```
+
+1. A **View** (ou endpoint da API) solicita o servico ao **Container**:
+   ```python
+   service = EmprestimoContainer.get_service()
+   ```
+
+2. O **Container** verifica se ja existe uma instancia (Singleton). Se nao, cria o **Repository** e injeta no **Service**:
+   ```python
+   cls._service_instance = IEmprestimo(
+       emprestimo_repository=cls.get_repository(),
+       leitor_repository=LeitorContainer.get_repository(),
+   )
+   ```
+
+3. O **Service** recebe os repositorios pelo construtor e os armazena:
+   ```python
+   class IEmprestimo(IEmprestimoService):
+       def __init__(
+           self,
+           emprestimo_repository: IEmprestimoRepository,
+           leitor_repository: ILeitorRepository,
+       ):
+           self._emprestimo_repo = emprestimo_repository
+           self._leitor_repo = leitor_repository
+   ```
+
+4. O **Service** utiliza os repositorios apenas pelas interfaces abstratas (`IEmprestimoRepository`, `ILeitorRepository`), sem conhecer as classes concretas.
+
+### Exemplo concreto: Componente Emprestimo
+
+O componente Emprestimo demonstra a injecao de dependencia com **multiplas dependencias**, pois depende tanto do seu proprio repositorio quanto do repositorio do Leitor:
+
+```
+emprestimo/interfaces.py       -> Define IEmprestimoRepository e IEmprestimoService (contratos abstratos)
+emprestimo/repositories.py     -> EmprestimoRepository implementa IEmprestimoRepository (acesso ao banco via Django ORM)
+emprestimo/services.py         -> IEmprestimo implementa IEmprestimoService, recebe IEmprestimoRepository e ILeitorRepository no construtor
+emprestimo/container.py        -> EmprestimoContainer cria EmprestimoRepository e injeta junto com LeitorContainer.get_repository() em IEmprestimo
+emprestimo/views.py            -> Usa EmprestimoContainer.get_service() para obter o servico pronto para uso
+emprestimo/api.py              -> Usa EmprestimoContainer.get_service() para obter o servico pronto para uso
+```
+
+### Exemplo concreto: Componente Leitor
+
+```
+leitor/interfaces.py       -> Define ILeitorRepository e ILeitorService (contratos abstratos)
+leitor/repositories.py     -> LeitorRepository implementa ILeitorRepository (acesso ao banco via Django ORM)
+leitor/services.py         -> ILeitor implementa ILeitorService, recebe ILeitorRepository no construtor
+leitor/container.py        -> LeitorContainer cria LeitorRepository e injeta em ILeitor (Singleton)
+leitor/views.py            -> Usa LeitorContainer.get_service() para obter o servico pronto para uso
+leitor/api.py              -> Usa LeitorContainer.get_service() para obter o servico pronto para uso
+```
+
+### Beneficios desta abordagem
+
+- **Desacoplamento**: O Service nao conhece a implementacao concreta do Repository
+- **Testabilidade**: E possivel substituir o Repository por um mock nos testes (via `Container.reset()`)
+- **Principio da Inversao de Dependencia (DIP)**: Modulos de alto nivel (Service) dependem de abstracoes (interfaces), nao de implementacoes concretas
+- **Singleton**: Garante uma unica instancia por componente, evitando criacao desnecessaria de objetos
+- **Composicao entre componentes**: O EmprestimoContainer reutiliza o LeitorContainer para obter o repositorio de leitores, demonstrando como a DI facilita a integracao entre componentes sem acoplamento direto
 
 # Instruções para execução do projeto
-## Estrutura dos códigos
-src <br>
-├── emprestimo <br>
-│ ├── IEmprestimo.java <br>
-│ └── OperacoesEmprestimo.java <br>
-│ <br>
-├── leitor <br>
-│ ├── ILeitor.java <br>
-│ └── operacoesLeitor.java <br>
-│ <br>
-└── Main.java
-
 ## Como executar
 (Vou incluir ainda)
 
