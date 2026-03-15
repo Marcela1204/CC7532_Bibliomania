@@ -151,6 +151,126 @@ leitor/api.py              -> Usa LeitorContainer.get_service() para obter o ser
 - **Composicao entre componentes**: O EmprestimoContainer reutiliza o LeitorContainer para obter o repositorio de leitores, demonstrando como a DI facilita a integracao entre componentes sem acoplamento direto
 
 # Instruções para execução do projeto
+
+## Requisitos
+
+- Python 3.12+
+- PostgreSQL (Supabase)
+
 ## Como executar
-(Vou incluir ainda)
+
+1. Clone o repositorio:
+```bash
+git clone https://github.com/Marcela1204/CC7532_Bibliomania.git
+```
+
+2. Vá até a raiz do projeto
+```bash
+cd lab4
+```
+
+3. Crie e ative o ambiente virtual:
+```bash
+python -m venv .venv
+```
+
+```bash
+source .venv/bin/activate  # Linux/Mac
+# source .venv/Scripts/activate no Windows
+```
+
+4. Instale as dependencias:
+```bash
+pip install -r requirements.txt
+```
+
+5. Configure as variaveis de ambiente:
+```bash
+cp .env.example .env
+# Edite o arquivo .env com as credenciais de acesso
+```
+
+6. Execute as migracoes:
+```bash
+python manage.py migrate
+```
+
+7. Inicie o servidor Django:
+```bash
+python manage.py runserver
+```
+
+8. Acessar projeto rodando localmente: 
+``` 
+http://127.0.0.1:8000/
+```
+
+--- 
+
+## API REST (FastAPI)
+
+### Leitores (porta 8001)
+| Metodo | Endpoint | Descricao |
+|---|---|---|
+| GET | `/api/leitores` | Listar todos os leitores |
+| POST | `/api/leitores` | Cadastrar novo leitor |
+| GET | `/api/leitores/{id}` | Buscar leitor por ID |
+| PUT | `/api/leitores/{id}` | Atualizar leitor |
+| GET | `/api/leitores/{id}/historico` | Historico do leitor |
+
+### Emprestimos (porta 8002)
+| Metodo | Endpoint | Descricao |
+|---|---|---|
+| GET | `/api/emprestimos` | Listar emprestimos ativos (filtro: ?id_leitor=) |
+| POST | `/api/emprestimos` | Registrar novo emprestimo |
+| POST | `/api/emprestimos/{id}/devolver` | Registrar devolucao |
+| POST | `/api/emprestimos/{id}/renovar` | Renovar emprestimo |
+| GET | `/api/emprestimos/{id}/prazo` | Verificar prazo e multa |
+
+## Estrutura do Projeto
+
+```
+lab4/
+├── bibliomania/          # Configuracoes do projeto Django
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│   └── asgi.py
+├── leitor/               # Componente Leitor
+│   ├── interfaces.py     # Interfaces abstratas (DI)
+│   ├── repositories.py   # Implementacao do repositorio
+│   ├── services.py       # Logica de negocio
+│   ├── container.py      # Container de injecao de dependencia
+│   ├── models.py         # Modelo de dados
+│   ├── views.py          # Views Django (MVT)
+│   ├── forms.py          # Formularios
+│   ├── urls.py           # Rotas
+│   ├── api.py            # Endpoints FastAPI
+│   └── admin.py          # Admin Django
+├── emprestimo/           # Componente Emprestimo
+│   ├── interfaces.py     # Interfaces abstratas (DI)
+│   ├── repositories.py   # Implementacao do repositorio
+│   ├── services.py       # Logica de negocio
+│   ├── container.py      # Container de injecao de dependencia
+│   ├── models.py         # Modelo de dados
+│   ├── views.py          # Views Django (MVT)
+│   ├── forms.py          # Formularios
+│   ├── urls.py           # Rotas
+│   ├── api.py            # Endpoints FastAPI
+│   └── admin.py          # Admin Django
+├── livro/                # Componente Livro (modelo minimo para FK)
+│   ├── models.py
+│   ├── apps.py
+│   ├── views.py
+│   └── admin.py
+├── templates/            # Templates HTML
+│   ├── base.html
+│   ├── leitor/
+│   └── emprestimo/
+├── requirements.txt
+├── manage.py
+├── .env.example
+├── readmelab4.md
+└── .gitignore
+```
 
