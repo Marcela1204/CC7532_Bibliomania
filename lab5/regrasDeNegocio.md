@@ -1,4 +1,5 @@
 # Descrição das Tarefas (BPMN)
+<img width="582" height="438" alt="image" src="https://github.com/user-attachments/assets/c730a288-fb63-4ad8-89ed-a9c4bf30a9e4" />
 
 
 # Regras de negócio
