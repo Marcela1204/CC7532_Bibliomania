@@ -1,5 +1,5 @@
 # BPMN
-[Diagrama](https://github.com/Marcela1204/CC7532_Bibliomania/blob/main/lab5/bpmn.jpg)
+<img width="1811" height="452" alt="image" src="https://github.com/user-attachments/assets/46dfd78f-1878-4fe6-9520-42a8b6e3db7a" />
 
 # Descrição das Tarefas (BPMN)
 <img width="582" height="438" alt="image" src="https://github.com/user-attachments/assets/c730a288-fb63-4ad8-89ed-a9c4bf30a9e4" />
