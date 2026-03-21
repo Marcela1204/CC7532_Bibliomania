@@ -227,6 +227,16 @@ http://127.0.0.1:8000/
 | POST | `/api/emprestimos/{id}/renovar` | Renovar emprestimo |
 | GET | `/api/emprestimos/{id}/prazo` | Verificar prazo e multa |
 
+### Livros (porta 8003)
+| Metodo | Endpoint | Descricao |
+|---|---|---|
+| GET | `/api/livros` | Listar livros (filtro: ?filtro=) |
+| POST | `/api/livros` | Cadastrar livro(s) via ISBN |
+| PUT | `/api/livros/{id}` | Editar livro |
+| GET | `/api/livros/isbn/{isbn}` | Detalhes por ISBN |
+| POST | `/api/livros/{id}/estoque` | Atualizar estoque |
+| GET | `/api/livros/validar/{isbn}` | Validar ISBN |
+
 ## Estrutura do Projeto
 
 ```
