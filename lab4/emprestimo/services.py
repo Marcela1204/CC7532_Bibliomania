@@ -97,7 +97,7 @@ class IEmprestimo(IEmprestimoService):
 
     def renovar_emprestimo(self, id_emprestimo: int) -> Emprestimo:
         """
-        Renova o emprestimo por mais 14 dias (maximo 2 renovacoes).
+        Renova o emprestimo por mais 7 dias (maximo 2 renovacoes).
         Encerra o emprestimo atual e cria um novo com novas datas.
         """
         emprestimo = self._emprestimo_repo.buscar_por_id(id_emprestimo)
@@ -117,7 +117,7 @@ class IEmprestimo(IEmprestimoService):
         })
 
         agora = timezone.now()
-        data_limite = agora + timedelta(days=PRAZO_EMPRESTIMO_DIAS * 2)
+        data_limite = agora + timedelta(days=PRAZO_EMPRESTIMO_DIAS)
 
         novo_emprestimo = self._emprestimo_repo.criar({
             'id_leitor': emprestimo.id_leitor,
@@ -159,12 +159,21 @@ class IEmprestimo(IEmprestimoService):
         agora = timezone.now()
         multa = self._calcular_multa(emprestimo, agora)
         dias_restantes = (emprestimo.data_limite - agora).days
+        dias_atraso = 0
+
+        if dias_restantes < 0:
+            dias_atraso = agora - emprestimo.data_limite
+            dias_atraso = dias_atraso.days
+            print(f"Dias de atraso: {dias_atraso}")
+
+        print(f"Dias restantes: {dias_restantes}")
+        print(f"emprestimo.data_limite: {emprestimo.data_limite}")
 
         return {
             'emprestimo': emprestimo,
             'atrasado': dias_restantes < 0,
             'dias_restantes': max(dias_restantes, 0),
-            'dias_atraso': abs(min(dias_restantes, 0)),
+            'dias_atraso': max(dias_atraso, 0),
             'multa': multa,
         }
 

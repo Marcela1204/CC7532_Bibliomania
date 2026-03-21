@@ -258,15 +258,22 @@ lab4/
 │   ├── urls.py           # Rotas
 │   ├── api.py            # Endpoints FastAPI
 │   └── admin.py          # Admin Django
-├── livro/                # Componente Livro (modelo minimo para FK)
-│   ├── models.py
-│   ├── apps.py
-│   ├── views.py
-│   └── admin.py
+├── livro/                # Componente Livro
+│   ├── interfaces.py     # Interfaces abstratas (DI)
+│   ├── repositories.py   # Implementacao do repositorio
+│   ├── services.py       # Logica de negocio + Google Books API
+│   ├── container.py      # Container de injecao de dependencia
+│   ├── models.py         # Modelo de dados
+│   ├── views.py          # Views Django (MVT)
+│   ├── forms.py          # Formularios
+│   ├── urls.py           # Rotas
+│   ├── api.py            # Endpoints FastAPI
+│   └── admin.py          # Admin Django
 ├── templates/            # Templates HTML
 │   ├── base.html
 │   ├── leitor/
-│   └── emprestimo/
+│   ├── emprestimo/
+│   └── livro/
 ├── requirements.txt
 ├── manage.py
 ├── .env.example
