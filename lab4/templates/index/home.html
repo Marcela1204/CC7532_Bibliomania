@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Bibliomania - Início{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="bi bi-people" style="font-size: 3rem;"></i>
+                <h5 class="card-title">Leitores</h5>
+                <p class="card-text">Gerencie os leitores cadastrados no sistema.</p>
+                <a href="{% url 'leitor:listar' %}" class="btn btn-primary">Acessar Leitores</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="bi bi-journal-arrow-up" style="font-size: 3rem;"></i>
+                <h5 class="card-title">Empréstimos</h5>
+                <p class="card-text">Visualize e gerencie os empréstimos de livros.</p>
+                <a href="{% url 'emprestimo:listar' %}" class="btn btn-primary">Acessar Empréstimos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="bi bi-book" style="font-size: 3rem;"></i>
+                <h5 class="card-title">Livros</h5>
+                <p class="card-text">Explore e administre o catálogo de livros.</p>
+                <a href="{% url 'livro:listar' %}" class="btn btn-primary">Acessar Livros</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
