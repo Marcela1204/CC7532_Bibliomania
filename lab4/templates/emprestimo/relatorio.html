@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Relatório de Empréstimos - Bibliomania{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2><i class="bi bi-file-earmark-pdf"></i> Relatório de Empréstimos</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Filtrar Empréstimos</h5>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <strong>Erro na validação:</strong>
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endif %}
+
+                <form method="get" action="{% url 'emprestimo:exportar_csv' %}" id="form-filtro">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_data_inicio" class="form-label">
+                                Data Inicial
+                                <small class="text-muted">(opcional)</small>
+                            </label>
+                            <input type="date" class="form-control {% if form.data_inicio.errors %}is-invalid{% endif %}"
+                                   id="id_data_inicio" name="data_inicio" value="{{ form.data_inicio.value|default:'' }}">
+                            {% if form.data_inicio.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.data_inicio.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_data_fim" class="form-label">
+                                Data Final
+                                <small class="text-muted">(opcional)</small>
+                            </label>
+                            <input type="date" class="form-control {% if form.data_fim.errors %}is-invalid{% endif %}"
+                                   id="id_data_fim" name="data_fim" value="{{ form.data_fim.value|default:'' }}">
+                            {% if form.data_fim.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.data_fim.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="id_status" class="form-label">Status</label>
+                            <select class="form-select {% if form.status.errors %}is-invalid{% endif %}"
+                                    id="id_status" name="status">
+                                <option value="">Todos os status</option>
+                                <option value="ativo" {% if form.status.value == 'ativo' %}selected{% endif %}>Ativo</option>
+                                <option value="devolvido" {% if form.status.value == 'devolvido' %}selected{% endif %}>Devolvido</option>
+                                <option value="atrasado" {% if form.status.value == 'atrasado' %}selected{% endif %}>Atrasado</option>
+                                <option value="renovado" {% if form.status.value == 'renovado' %}selected{% endif %}>Renovado</option>
+                            </select>
+                            {% if form.status.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.status.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-info-circle"></i>
+                        <strong>Validação de Período:</strong>
+                        Se preenchidas ambas as datas, a data final deve ser igual ou posterior à data inicial.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-download"></i> Exportar em CSV
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Dicas de Uso</h5>
+                <ul class="small text-muted">
+                    <li>Deixe os campos de data em branco para incluir todos os empréstimos</li>
+                    <li>Se preencher apenas a Data Inicial, serão inclusos empréstimos a partir dessa data</li>
+                    <li>Se preencher apenas a Data Final, serão inclusos empréstimos até essa data</li>
+                    <li>Se preencher ambas as datas, elas devem formar um período válido (data final ≥ data inicial)</li>
+                    <li>Selecione um status para filtrar por tipo específico</li>
+                    <li>O arquivo CSV será gerado com as colunas: ID, Leitor, Email, Telefone, Livro, Autores, ISBN, Data Empréstimo, Data Devolução, Data Limite, Status, Renovações e Multa</li>
+                    <li>Use um aplicativo de planilha (Excel, LibreOffice, Google Sheets) para abrir o arquivo CSV</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-info-circle"></i> Sobre</h5>
+                <p class="card-text">
+                    Utilize este formulário para gerar relatórios de empréstimos em formato CSV.
+                    Você pode filtrar os dados por um intervalo de datas e pelo status do empréstimo.
+                </p>
+                <p class="card-text small text-muted">
+                    O relatório inclui informações detalhadas do leitor, do livro emprestado,
+                    datas importantes e eventuais multas por atraso.
+                </p>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-exclamation-triangle"></i> Validação</h5>
+                <p class="small">
+                    <strong>Período Válido:</strong> A data final não pode ser anterior à data inicial.
+                </p>
+                <p class="small text-success">
+                    ✓ Válido: 01/05/2025 até 31/05/2025
+                </p>
+                <p class="small text-danger">
+                    ✗ Inválido: 31/05/2025 até 01/05/2025
+                </p>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-gear"></i> Opções</h5>
+                <a href="{% url 'emprestimo:listar' %}" class="btn btn-outline-secondary btn-sm w-100 mb-2">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <a href="{% url 'emprestimo:registrar' %}" class="btn btn-outline-primary btn-sm w-100">
+                    <i class="bi bi-plus"></i> Novo Empréstimo
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

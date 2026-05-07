@@ -66,3 +66,20 @@ class EmprestimoRepository(IEmprestimoRepository):
                 data_devolucao__isnull=True,
             )
         )
+
+    def filtrar_por_data(
+        self, data_inicio=None, data_fim=None, status=None
+    ) -> list[Emprestimo]:
+        """Filtra emprestimos por intervalo de datas e status."""
+        qs = Emprestimo.objects.select_related('id_leitor', 'id_livro')
+
+        if data_inicio:
+            qs = qs.filter(data_emprestimo__date__gte=data_inicio)
+
+        if data_fim:
+            qs = qs.filter(data_emprestimo__date__lte=data_fim)
+
+        if status:
+            qs = qs.filter(status=status)
+
+        return list(qs.order_by('-data_emprestimo'))

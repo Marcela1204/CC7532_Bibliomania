@@ -29,6 +29,10 @@ class IEmprestimoRepository(ABC):
     def buscar_pendencias_leitor(self, id_leitor: int) -> list:
         ...
 
+    @abstractmethod
+    def filtrar_por_data(self, data_inicio=None, data_fim=None, status=None) -> list:
+        ...
+
 
 class IEmprestimoService(ABC):
     """Interface IEmprestimo conforme especificacao."""
@@ -55,4 +59,8 @@ class IEmprestimoService(ABC):
 
     @abstractmethod
     def validar_prazo(self, id_emprestimo: int) -> dict:
+        ...
+
+    @abstractmethod
+    def gerar_relatorio_csv(self, data_inicio=None, data_fim=None, status=None) -> str:
         ...

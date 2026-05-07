@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.decorators.http import require_POST
+from django.http import HttpResponse
 
 from emprestimo.container import EmprestimoContainer
-from emprestimo.forms import RegistrarEmprestimoForm
+from emprestimo.forms import RegistrarEmprestimoForm, FiltroRelatorioEmprestimoForm
 
 
 def listar_emprestimos(request):
@@ -111,3 +112,33 @@ def detalhes_emprestimo(request, id_emprestimo):
         'dias_atraso': prazo_info['dias_atraso'],
         'multa': prazo_info['multa'],
     })
+
+
+def relatorio_emprestimos(request):
+    """Exibe formulario de filtro para gerar relatorio de emprestimos."""
+    form = FiltroRelatorioEmprestimoForm()
+    return render(request, 'emprestimo/relatorio.html', {'form': form})
+
+
+def exportar_relatorio_csv(request):
+    """Exporta relatorio de emprestimos em CSV com filtro de datas."""
+    form = FiltroRelatorioEmprestimoForm(request.GET)
+
+    if not form.is_valid():
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(request, f'{error}')
+        return render(request, 'emprestimo/relatorio.html', {'form': form})
+
+    data_inicio = form.cleaned_data.get('data_inicio')
+    data_fim = form.cleaned_data.get('data_fim')
+    status = form.cleaned_data.get('status') or None
+
+    service = EmprestimoContainer.get_service()
+    csv_content = service.gerar_relatorio_csv(data_inicio, data_fim, status)
+
+    response = HttpResponse(csv_content, content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="relatorio_emprestimos.csv"'
+    response['Content-Type'] = 'text/csv; charset=utf-8'
+
+    return response

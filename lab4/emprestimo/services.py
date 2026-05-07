@@ -1,6 +1,8 @@
 from datetime import timedelta
 from decimal import Decimal
 from typing import Optional
+import csv
+import io
 
 from django.utils import timezone
 
@@ -188,3 +190,52 @@ class IEmprestimo(IEmprestimoService):
             dias_atraso = (data_referencia - emprestimo.data_limite).days
             return MULTA_POR_DIA * dias_atraso
         return Decimal('0.00')
+
+    def gerar_relatorio_csv(
+        self, data_inicio=None, data_fim=None, status=None
+    ) -> str:
+        """Gera relatorio de emprestimos em formato CSV."""
+        emprestimos = self._emprestimo_repo.filtrar_por_data(
+            data_inicio, data_fim, status
+        )
+
+        output = io.StringIO()
+        output.write('\ufeff')  # BOM para compatibilidade com Excel
+        writer = csv.writer(output, delimiter=';', quoting=csv.QUOTE_ALL)
+
+        writer.writerow([
+            'ID Empréstimo',
+            'Leitor',
+            'Email',
+            'Telefone',
+            'Livro',
+            'Autor',
+            'ISBN',
+            'Data Empréstimo',
+            'Data Devolução',
+            'Data Limite',
+            'Status',
+            'Renovações',
+            'Multa (R$)',
+        ])
+
+        agora = timezone.now()
+        for emp in emprestimos:
+            multa = self._calcular_multa(emp, agora)
+            writer.writerow([
+                emp.id,
+                emp.id_leitor.nome,
+                emp.id_leitor.email,
+                emp.id_leitor.telefone,
+                emp.id_livro.titulo,
+                emp.id_livro.autores,
+                emp.id_livro.isbn,
+                emp.data_emprestimo.strftime('%d/%m/%Y %H:%M:%S'),
+                emp.data_devolucao.strftime('%d/%m/%Y %H:%M:%S') if emp.data_devolucao else '',
+                emp.data_limite.strftime('%d/%m/%Y %H:%M:%S'),
+                emp.get_status_display(),
+                emp.renovacoes,
+                f'{multa:.2f}',
+            ])
+
+        return output.getvalue()
