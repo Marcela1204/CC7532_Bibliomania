@@ -57,7 +57,7 @@ def cadastrar_livro(request):
                 titulo = livros[0].titulo if livros else isbn
                 messages.success(
                     request,
-                    f'{quantidade} exemplar(es) de "{titulo}" cadastrado(s) com sucesso!'
+                    f'{quantidade} exemplar(es) de "{titulo}" cadastrado(s) com sucesso.'
                 )
                 return redirect('livro:listar')
             except ValueError as e:
@@ -72,7 +72,7 @@ def editar_livro(request, id_livro):
     service = LivroContainer.get_service()
     livro = service.buscar_livro_por_id(id_livro)
     if not livro:
-        messages.error(request, 'Livro nao encontrado.')
+        messages.error(request, 'Livro não encontrado.')
         return redirect('livro:listar')
 
     if request.method == 'POST':
@@ -80,7 +80,7 @@ def editar_livro(request, id_livro):
         if form.is_valid():
             try:
                 service.editar_livro(id_livro, form.cleaned_data)
-                messages.success(request, 'Livro atualizado com sucesso!')
+                messages.success(request, 'Livro atualizado com sucesso.')
                 return redirect('livro:listar')
             except ValueError as e:
                 messages.error(request, str(e))

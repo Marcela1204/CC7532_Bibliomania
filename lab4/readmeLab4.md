@@ -157,7 +157,7 @@ leitor/api.py              -> Usa LeitorContainer.get_service() para obter o ser
 - Python 3.12+
 - PostgreSQL (Supabase)
 
-## Como executar
+## Como executar via git bash
 
 1. Clone o repositorio:
 ```bash
@@ -175,8 +175,9 @@ python -m venv .venv
 ```
 
 ```bash
-source .venv/bin/activate  # Linux/Mac
-# source .venv/Scripts/activate no Windows
+source .venv/Scripts/activate # no Windows
+
+# source .venv/bin/activate  # Linux/Mac
 ```
 
 4. Instale as dependencias:

@@ -101,6 +101,7 @@ class IEmprestimo(IEmprestimoService):
         """
         Renova o emprestimo por mais 7 dias (maximo 2 renovacoes).
         Encerra o emprestimo atual e cria um novo com novas datas.
+        Nao permite renovacao se o emprestimo esta atrasado.
         """
         emprestimo = self._emprestimo_repo.buscar_por_id(id_emprestimo)
         if not emprestimo:
@@ -112,6 +113,12 @@ class IEmprestimo(IEmprestimoService):
         if emprestimo.renovacoes >= MAX_RENOVACOES:
             raise ValueError(
                 f"Maximo de {MAX_RENOVACOES} renovacoes atingido para este emprestimo."
+            )
+
+        agora = timezone.now()
+        if emprestimo.data_limite < agora:
+            raise ValueError(
+                "Livro indisponivel para renovacao. O emprestimo esta fora do prazo de devolucao."
             )
 
         self._emprestimo_repo.atualizar(id_emprestimo, {

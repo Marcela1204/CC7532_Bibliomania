@@ -20,7 +20,7 @@ def cadastrar_leitor(request):
             service = LeitorContainer.get_service()
             try:
                 service.cadastrar_leitor(form.cleaned_data)
-                messages.success(request, 'Leitor cadastrado com sucesso!')
+                messages.success(request, 'Leitor cadastrado com sucesso.')
                 return redirect('leitor:listar')
             except ValueError as e:
                 messages.error(request, str(e))
@@ -35,7 +35,7 @@ def editar_leitor(request, id_leitor):
     try:
         perfil = service.acessar_historico_leitor(id_leitor)
     except ValueError:
-        messages.error(request, 'Leitor nao encontrado.')
+        messages.error(request, 'Leitor não encontrado.')
         return redirect('leitor:listar')
 
     leitor = perfil['leitor']
@@ -45,7 +45,7 @@ def editar_leitor(request, id_leitor):
         if form.is_valid():
             try:
                 service.atualizar_leitor(id_leitor, form.cleaned_data)
-                messages.success(request, 'Leitor atualizado com sucesso!')
+                messages.success(request, 'Leitor atualizado com sucesso.')
                 return redirect('leitor:listar')
             except ValueError as e:
                 messages.error(request, str(e))
@@ -61,7 +61,7 @@ def perfil_leitor(request, id_leitor):
     try:
         perfil = service.acessar_historico_leitor(id_leitor)
     except ValueError:
-        messages.error(request, 'Leitor nao encontrado.')
+        messages.error(request, 'Leitor não encontrado.')
         return redirect('leitor:listar')
 
     from emprestimo.container import EmprestimoContainer

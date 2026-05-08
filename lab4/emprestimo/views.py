@@ -56,7 +56,7 @@ def registrar_emprestimo(request):
                 id_leitor = form.cleaned_data['id_leitor'].id
                 id_livro = form.cleaned_data['id_livro'].id
                 service.registrar_emprestimo(id_leitor, id_livro)
-                messages.success(request, 'Emprestimo registrado com sucesso!')
+                messages.success(request, 'Empréstimo registrado com sucesso.')
                 return redirect('emprestimo:listar')
             except ValueError as e:
                 messages.error(request, str(e))
@@ -75,10 +75,10 @@ def registrar_devolucao(request, id_emprestimo):
         if multa > 0:
             messages.warning(
                 request,
-                f'Livro devolvido com atraso. Multa: R$ {multa:.2f}'
+                f'Livro devolvido com atraso. Multa: R$ {multa:.2f}.'
             )
         else:
-            messages.success(request, 'Devolucao registrada com sucesso!')
+            messages.success(request, 'Devolução registrada com sucesso.')
     except ValueError as e:
         messages.error(request, str(e))
     return redirect('emprestimo:listar')
@@ -90,7 +90,7 @@ def renovar_emprestimo(request, id_emprestimo):
     service = EmprestimoContainer.get_service()
     try:
         service.renovar_emprestimo(id_emprestimo)
-        messages.success(request, 'Emprestimo renovado com sucesso!')
+        messages.success(request, 'Empréstimo renovado com sucesso.')
     except ValueError as e:
         messages.error(request, str(e))
     return redirect('emprestimo:listar')
@@ -102,7 +102,7 @@ def detalhes_emprestimo(request, id_emprestimo):
     try:
         prazo_info = service.validar_prazo(id_emprestimo)
     except ValueError:
-        messages.error(request, 'Emprestimo nao encontrado.')
+        messages.error(request, 'Empréstimo não encontrado.')
         return redirect('emprestimo:listar')
 
     return render(request, 'emprestimo/detalhes.html', {
@@ -125,9 +125,6 @@ def exportar_relatorio_csv(request):
     form = FiltroRelatorioEmprestimoForm(request.GET)
 
     if not form.is_valid():
-        for field, errors in form.errors.items():
-            for error in errors:
-                messages.error(request, f'{error}')
         return render(request, 'emprestimo/relatorio.html', {'form': form})
 
     data_inicio = form.cleaned_data.get('data_inicio')
